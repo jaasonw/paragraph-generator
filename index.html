@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="x-ua-compatible" content="IE=edge">
+        <!-- jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="ParagraphGenerator.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#form").submit(function(event) {
+                    event.preventDefault()
+                    var data = $("#form").serializeArray();
+                    var name = data[0].value;
+                    var gender = (data[1].value == "male") ? Gender.Male : Gender.Female;
+                    var a = new ParagraphGenerator(name, gender);
+                    
+                    $("#paragraph").val(a.generateParagraph())
+                });
+            });
+        </script>
+    </head>
+
+<body>
+    <h2>not scuffed</h2>
+
+    <form id = "form">
+        <input type="text" name="name" value="">
+        <br>
+        <input type="radio" name="gender" value="male" checked> Male<br>
+        <input type="radio" name="gender" value="female"> Female<br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <textarea id = "paragraph" rows="20" cols="100"></textarea>
+
+</body>
+</html>
