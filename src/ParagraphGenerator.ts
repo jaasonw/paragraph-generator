@@ -1,5 +1,5 @@
 enum Gender {
-    Male, Female
+    Male, Female, Other
 }
 
 class ParagraphGenerator {
