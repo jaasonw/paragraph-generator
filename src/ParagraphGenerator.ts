@@ -29,12 +29,28 @@ class ParagraphGenerator {
      * @returns a string containing the complete paragraph
      */
     public generateParagraph(problem1: string = "", problem2: string = ""): string {
+        // if "any" is selected for both problems, we dont want the same type
+        // for both
+        if (problem1 == "" && problem2 == "") {
+            problem1 = this.getRandom(this.getProblemTypes());
+            problem2 = this.getRandom(this.getProblemTypes());
+            while (problem1 == problem2) {
+                problem2 = this.getRandom(this.getProblemTypes());
+            }
+        }
+        if (problem1 == "") {
+            problem1 = this.getRandom(this.getProblemTypes());
+        }
+        if (problem2 == "") {
+            problem2 = this.getRandom(this.getProblemTypes());
+        }
+
         let paragraph: string = "";
         let problemTreatment1: string = this.generateProblemTreatment(problem1);
         let problemTreatment2: string = this.generateProblemTreatment(problem2);
 
         while (problemTreatment1 == problemTreatment2) {
-            problemTreatment2 = this.generateProblemTreatment();
+            problemTreatment2 = this.generateProblemTreatment(problem2);
         }
 
         paragraph += this.convertSentence(this.getRandom(this.sentences[0]) + " ");
@@ -64,13 +80,9 @@ class ParagraphGenerator {
     * Generates a problem and treatment pair
     * 
     * @param problemType the type of problem-treatment to generate
-    *        (random if left blank)
     * @returns a string containing the 
     */
-    private generateProblemTreatment(problemType: string = ""): string {
-        if (problemType == "") {
-            problemType = this.getRandom(this.getProblemTypes());
-        }
+    private generateProblemTreatment(problemType: string): string {
         let sentence: string = "";
         let problem = this.getRandom(this.problems[problemType]["problems"]);
         let treatment = this.getRandom(this.problems[problemType]["treatments"]);

@@ -30,11 +30,26 @@ var ParagraphGenerator = /** @class */ (function () {
     ParagraphGenerator.prototype.generateParagraph = function (problem1, problem2) {
         if (problem1 === void 0) { problem1 = ""; }
         if (problem2 === void 0) { problem2 = ""; }
+        // if "any" is selected for both problems, we dont want the same type
+        // for both
+        if (problem1 == "" && problem2 == "") {
+            problem1 = this.getRandom(this.getProblemTypes());
+            problem2 = this.getRandom(this.getProblemTypes());
+            while (problem1 == problem2) {
+                problem2 = this.getRandom(this.getProblemTypes());
+            }
+        }
+        if (problem1 == "") {
+            problem1 = this.getRandom(this.getProblemTypes());
+        }
+        if (problem2 == "") {
+            problem2 = this.getRandom(this.getProblemTypes());
+        }
         var paragraph = "";
         var problemTreatment1 = this.generateProblemTreatment(problem1);
         var problemTreatment2 = this.generateProblemTreatment(problem2);
         while (problemTreatment1 == problemTreatment2) {
-            problemTreatment2 = this.generateProblemTreatment();
+            problemTreatment2 = this.generateProblemTreatment(problem2);
         }
         paragraph += this.convertSentence(this.getRandom(this.sentences[0]) + " ");
         paragraph += this.convertSentence(this.getRandom(this.sentences[1]) + " ");
@@ -61,14 +76,9 @@ var ParagraphGenerator = /** @class */ (function () {
     * Generates a problem and treatment pair
     *
     * @param problemType the type of problem-treatment to generate
-    *        (random if left blank)
     * @returns a string containing the
     */
     ParagraphGenerator.prototype.generateProblemTreatment = function (problemType) {
-        if (problemType === void 0) { problemType = ""; }
-        if (problemType == "") {
-            problemType = this.getRandom(this.getProblemTypes());
-        }
         var sentence = "";
         var problem = this.getRandom(this.problems[problemType]["problems"]);
         var treatment = this.getRandom(this.problems[problemType]["treatments"]);
