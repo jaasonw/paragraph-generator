@@ -7,7 +7,7 @@
         <script src="src/ParagraphGenerator.js"></script>
         <script>
             $(document).ready(function () {
-                var gen = new ParagraphGenerator("", Gender.Other, "paragraph-generator/src/sentences.json", "paragraph-generator/src/problem_treatments.json");
+                var gen = new ParagraphGenerator("", Gender.Other, "src/sentences.json", "src/problem_treatments.json");
                 $("#form").submit(function(event) {
                     event.preventDefault();
                     var data = $("#form").serializeArray();
