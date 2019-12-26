@@ -7,14 +7,17 @@
         <script src="src/ParagraphGenerator.js"></script>
         <script>
             $(document).ready(function () {
+                var gen = new ParagraphGenerator("", Gender.Other, "/src/sentences.json", "/src/problem_treatments.json");
                 $("#form").submit(function(event) {
-                    event.preventDefault()
+                    event.preventDefault();
                     var data = $("#form").serializeArray();
                     var name = data[0].value;
                     var gender = (data[1].value == "male") ? Gender.Male : Gender.Female;
-                    var a = new ParagraphGenerator(name, gender);
                     
-                    $("#paragraph").val(a.generateParagraph())
+                    gen.updateName(name);
+                    gen.updateGender(name);
+                    
+                    $("#paragraph").val(gen.generateParagraph())
                 });
             });
         </script>

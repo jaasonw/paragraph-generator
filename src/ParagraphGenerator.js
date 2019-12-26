@@ -3,152 +3,158 @@ var Gender;
 (function (Gender) {
     Gender[Gender["Male"] = 0] = "Male";
     Gender[Gender["Female"] = 1] = "Female";
+    Gender[Gender["Other"] = 2] = "Other";
 })(Gender || (Gender = {}));
 var ParagraphGenerator = /** @class */ (function () {
-    function ParagraphGenerator(name, gender) {
+    /**
+     * @param name Name of the patient
+     * @param gender Gender of the patient
+     * @param sentenceUrl url to load sentence bank from
+     * @param problemUrl  url to load problem bank from
+     */
+    function ParagraphGenerator(name, gender, sentenceUrl, problemUrl) {
         this.sentences = [];
-        this.personalPronoun = "";
-        this.personalPronounC = "";
-        this.possessivePronoun = "";
-        this.possessivePronounC = "";
-        this.objectivePronoun = "";
-        this.objectivePronounC = "";
-        this.problems = [];
-        this.treatments = [];
         this.name = "";
         this.gender = Gender.Male;
+        this.problems = {};
         this.name = name;
         this.gender = gender;
-        this.initPronouns();
-        this.initSentences();
-        this.initProblemTreatments();
+        this.initSentences(sentenceUrl);
+        this.initProblemTreatments(problemUrl);
     }
-    ParagraphGenerator.prototype.generateParagraph = function () {
+    /**
+     * Generates a complete paragraph
+     *
+     * @param problem1 the first problem type (blank for random)
+     * @param problem2 the second problem type (blank for random)
+     * @returns a string containing the complete paragraph
+     */
+    ParagraphGenerator.prototype.generateParagraph = function (problem1, problem2) {
+        if (problem1 === void 0) { problem1 = ""; }
+        if (problem2 === void 0) { problem2 = ""; }
         var paragraph = "";
         var problemTreatment1 = this.generateProblemTreatment();
         var problemTreatment2 = this.generateProblemTreatment();
         while (problemTreatment1 == problemTreatment2) {
             problemTreatment2 = this.generateProblemTreatment();
         }
-        paragraph += this.getRandom(this.sentences[0]) + " ";
-        paragraph += this.getRandom(this.sentences[1]) + " ";
-        paragraph += this.getRandom(this.sentences[2]) + " ";
-        paragraph += problemTreatment1 + " ";
-        paragraph += problemTreatment2 + " ";
-        paragraph += this.getRandom(this.sentences[3]) + " ";
-        paragraph += this.getRandom(this.sentences[4]) + " ";
+        paragraph += this.convertSentence(this.getRandom(this.sentences[0]) + " ");
+        paragraph += this.convertSentence(this.getRandom(this.sentences[1]) + " ");
+        paragraph += this.convertSentence(this.getRandom(this.sentences[2]) + " ");
+        paragraph += this.convertSentence(problemTreatment1 + " ");
+        paragraph += this.convertSentence(problemTreatment2 + " ");
+        paragraph += this.convertSentence(this.getRandom(this.sentences[3]) + " ");
+        paragraph += this.convertSentence(this.getRandom(this.sentences[4]) + " ");
         return paragraph;
     };
-    ParagraphGenerator.prototype.generateProblemTreatment = function () {
+    /**
+     * Returns a list of available problem types
+     *
+     * @returns the list of available problem types
+     */
+    ParagraphGenerator.prototype.getProblemTypes = function () {
+        var problemTypes = [];
+        for (var problemType in this.problems) {
+            problemTypes.push(problemType);
+        }
+        return problemTypes;
+    };
+    /**
+    * Generates a problem and treatment pair
+    *
+    * @param problemType the type of problem-treatment to generate
+    *        (random if left blank)
+    * @returns a string containing the
+    */
+    ParagraphGenerator.prototype.generateProblemTreatment = function (problemType) {
+        if (problemType === void 0) { problemType = ""; }
+        if (problemType == "") {
+            problemType = this.getRandom(this.getProblemTypes());
+        }
         var sentence = "";
-        var index = Math.floor((Math.random() * this.problems.length));
-        sentence = this.getRandom(this.problems[index]) + " " + this.getRandom(this.treatments[index]);
+        var problem = this.getRandom(this.problems[problemType]["problems"]);
+        var treatment = this.getRandom(this.problems[problemType]["treatments"]);
+        sentence = problem + " " + treatment;
         return sentence;
     };
+    ParagraphGenerator.prototype.updateName = function (name) { this.name = name; };
+    ParagraphGenerator.prototype.updateGender = function (gender) { this.gender = gender; };
+    /**
+     * returns a random element in an array
+     *
+     * @param array The array to pick from
+     * @returns an element from the array
+     */
     ParagraphGenerator.prototype.getRandom = function (array) {
         return array[Math.floor((Math.random() * array.length))];
     };
-    ParagraphGenerator.prototype.initPronouns = function () {
-        // scuffed
-        this.personalPronoun = (this.gender == Gender.Male) ? "he" : "she";
-        this.personalPronounC = (this.gender == Gender.Male) ? "He" : "She";
-        this.possessivePronoun = (this.gender == Gender.Male) ? "his" : "her";
-        this.possessivePronounC = (this.gender == Gender.Male) ? "His" : "Her";
-        this.objectivePronoun = (this.gender == Gender.Male) ? "him" : "her";
-        this.objectivePronounC = (this.gender == Gender.Male) ? "Him" : "Her";
+    // TODO: unhardcode the urls
+    /**
+     * Loads a json file containing the sentence bank from a url
+     * @param url the url to load from
+     */
+    ParagraphGenerator.prototype.initSentences = function (url) {
+        var _this = this;
+        $.getJSON(url, function (data) {
+            _this.sentences = data;
+        });
     };
-    ParagraphGenerator.prototype.initSentences = function () {
-        // intro 1
-        this.sentences.push(["SW met with " + this.name + " for monthly individual counseling."]);
-        // intro 2
-        this.sentences.push([
-            this.personalPronounC + " appeared calm and receptive when approached by SW for the meeting.",
-            this.personalPronounC + " appeared attentive and calm when approached by SW for the meeting.",
-            this.personalPronounC + " appeared calm and friendly when approached by SW for the meeting.",
-            this.personalPronounC + " appeared calm and alert during the meeting."
-        ]);
-        // intro 3
-        this.sentences.push([
-            "SW inquired about " + this.name + "'s overall health and wellbeing in the past month. " + this.personalPronounC + " denied any major significant changes to " + this.possessivePronoun + " overall health status or routine within the past month.",
-            "SW inquired about " + this.name + "'s overall health and wellbeing in the past month. " + this.personalPronounC + " denied any major significant changes to " + this.possessivePronoun + " overall health status or routine recently.",
-            "SW inquired about " + this.possessivePronoun + " overall health status and wellbeing in the past month. " + this.personalPronounC + " reported to be in a stable status in mood and health.",
-            this.personalPronounC + " expressed being satisfied and content with " + this.possessivePronoun + " progress and life overall."
-        ]);
-        // patient response
-        this.sentences.push([
-            this.name + " was accepting of the support and care.",
-            this.name + " was appreciative and thankful for the support and interventions.",
-            this.personalPronounC + " was accepting of the care and interventions.",
-            this.name + " was appreciative and accepting of the care.",
-            this.name + " was thankful and accepting for the session."
-        ]);
-        // conclusion
-        this.sentences.push([
-            "SW will continue to monitor " + this.name + "'s psychosocial mood status while providing case management assistance as needed.",
-            "SW will continue to monitor " + this.name + "'s mood status and provide individual counseling regularly."
-        ]);
+    /**
+     * Loads a json file containing the problem-treatment bank from a url
+     * @param url the url to load from
+     */
+    ParagraphGenerator.prototype.initProblemTreatments = function (url) {
+        var _this = this;
+        $.getJSON(url, function (data) {
+            _this.problems = data;
+        });
     };
-    ParagraphGenerator.prototype.initProblemTreatments = function () {
-        this.problems[0] = [
-            "However, " + this.personalPronoun + " reported having a fall at home with no hospitalizations. " + this.personalPronounC + " expressed worry about " + this.possessivePronoun + " physical health decline with age and further risk of fall.",
-            this.name + " reported having multiple near fall incidents and continues to be at risk of fall."
-        ];
-        this.treatments[0] = [
-            "SW reinforced proper fall prevention and precaution techniques to reduce the risk of future fall.",
-            "SW educated " + this.name + " on fall prevention and precaution techniques, such as properly using " + this.possessivePronoun + " walking device to reduce the risk of future fall."
-        ];
-        this.problems[1] = [
-            "However, " + this.name + " expressed negative feelings and concern toward " + this.possessivePronoun + " health decline related to aging.",
-            "However, " + this.personalPronoun + " expressed concern and worry that " + this.personalPronoun + "\u2019ll become a burden on " + this.possessivePronoun + " family due to " + this.possessivePronoun + " further aging and physical health decline.",
-            "However, " + this.personalPronoun + " expressed concern about further physical decline related to aging."
-        ];
-        this.treatments[1] = [
-            "SW provided the opportunity for " + this.name + " to vent " + this.personalPronoun + " negative feelings appropriately, through use of empathy, active listening, and positive feedback.",
-            "SW provided the opportunity for " + this.objectivePronoun + " to vent " + this.personalPronoun + " inner feelings appropriately through use of active listening, empathy, and positive feedback.",
-            "SW provided emotional support through use of active listening, empathy, and validation.",
-            "SW reinforced coping skills and relaxation techniques to help " + this.name + " manage the symptoms and difficulties of aging.",
-            "SW encouraged " + this.name + " to keep active participation in the Center\u2019s activities in order to stay positive about the aging process and take " + this.personalPronoun + " mind off of the negative symptoms."
-        ];
-        this.problems[2] = [
-            this.name + " complained about having sleep problems, only getting a few hours of sleep per night with frequent urination.",
-            this.personalPronounC + " complained about having poor sleep, only getting 4-5 hours of sleep per night and having at least 3x nocturia.",
-            this.personalPronounC + " complained about having trouble sleeping at night, getting less hours of sleep per night than he did before, citing the recent cold weather as a factor."
-        ];
-        this.treatments[2] = [
-            "SW reinforced proper sleep hygiene and relaxation techniques to help with the sleeping problems.",
-            "SW taught " + this.objectivePronoun + " sleep hygiene and relaxation techniques such as stretching before bed, to help with sleep problems.",
-            "SW encouraged relaxation and breathing techniques such as stretching or taking a warm bath before bed to increase sleep quality."
-        ];
-        this.problems[3] = [
-            this.name + " complained about joint pain and leg weakness, which has affected " + this.possessivePronoun + " mood. " + this.personalPronounC + " cites the recent cold weather as a factor.",
-            this.name + " complained about somatic pain related to aging and expressed worry about aging. " + this.personalPronounC + " stated that on some days, " + this.possessivePronoun + " mood was affected negatively by " + this.possessivePronoun + " somatic pain."
-        ];
-        this.treatments[3] = [
-            "SW provided the opportunity for " + this.name + " to vent " + this.possessivePronoun + " negative feelings appropriately, through use of empathy, active listening, and positive feedback.",
-            "SW provided the opportunity for " + this.objectivePronoun + " to vent " + this.possessivePronoun + " inner feelings appropriately through use of active listening, empathy, and positive feedback.",
-            "SW provided emotional support through use of active listening, empathy, and validation."
-        ];
-        this.problems[4] = [
-            this.personalPronounC + " complained about having hard of hearing, leading to frustration and difficulty communicating with others.",
-        ];
-        this.treatments[4] = [
-            "SW provided a quiet environment for " + this.objectivePronoun + " to communicate and be understood easily, letting " + this.objectivePronoun + " express " + this.possessivePronoun + " feelings through active listening.",
-            "SW provided a quiet place for " + this.objectivePronoun + " to talk and listen clearly, as well as providing emotional support."
-        ];
-        this.problems[5] = [
-            this.personalPronounC + " complained about memory loss, which often leads to confusion and misplacing of personal possessions."
-        ];
-        this.treatments[5] = [
-            "SW encouraged " + this.name + " to maintain active participation in the Center\u2019s activities and exercises as a form of mental and cognitive stimulation.",
-            "SW provided reality orientation and offered opportunity to reminiscence as a form of cognitive stimulation."
-        ];
-        this.problems[6] = [
-            this.name + " expressed feelings of loneliness and isolation.",
-            this.name + " remained mostly quiet and said few words. " + this.name + " seems to lack motivation for social interaction."
-        ];
-        this.treatments[6] = [
-            "SW encouraged " + this.name + " to keep active participation in the Center\u2019s activities and interaction with peers to reduce feelings of loneliness. SW also provided emotional support through use of active listening, empathy, and validation."
-        ];
+    /**
+     * Converts the pronouns and fills in the names of a sentence
+     * @param sentence the input sentence
+     * @returns a sentence with the pronouns and _'s replaced
+     */
+    ParagraphGenerator.prototype.convertSentence = function (sentence) {
+        // Fill in names
+        sentence = sentence.replace(/_/g, this.name);
+        // Pronoun regex patterns (there might be a cleaner way to do this)
+        // Personal pronouns
+        var personalPronounsLower = new RegExp('/\bhe\b|\bshe\b|\bthey\b/g');
+        var personalPronounsUpper = new RegExp('/\bHe\b|\bShe\b|\bThey\b/g');
+        // Possessive pronouns
+        var possesivePronounsLower = new RegExp('/\bhis\b|\bher\b|\btheir\b/g');
+        var possesivePronounsUpper = new RegExp('/\bHis\b|\bHer\b|\bTheir\b/g');
+        // Object pronouns
+        var objectPronounsLower = new RegExp('/\bhim\b|\bher\b|\bthem\b/g');
+        var objectPronounsUpper = new RegExp('/\bHim\b|\bHer\b|\bThem\b/g');
+        // Convert pronouns
+        switch (this.gender) {
+            case Gender.Male:
+                sentence = sentence.replace(personalPronounsLower, "he");
+                sentence = sentence.replace(personalPronounsUpper, "He");
+                sentence = sentence.replace(possesivePronounsLower, "his");
+                sentence = sentence.replace(possesivePronounsUpper, "His");
+                sentence = sentence.replace(objectPronounsLower, "him");
+                sentence = sentence.replace(objectPronounsUpper, "Him");
+                break;
+            case Gender.Female:
+                sentence = sentence.replace(personalPronounsLower, "she");
+                sentence = sentence.replace(personalPronounsUpper, "She");
+                sentence = sentence.replace(possesivePronounsLower, "her");
+                sentence = sentence.replace(possesivePronounsUpper, "Her");
+                sentence = sentence.replace(objectPronounsLower, "her");
+                sentence = sentence.replace(objectPronounsUpper, "Her");
+                break;
+            default:
+                sentence = sentence.replace(personalPronounsLower, "they");
+                sentence = sentence.replace(personalPronounsUpper, "They");
+                sentence = sentence.replace(possesivePronounsLower, "their");
+                sentence = sentence.replace(possesivePronounsUpper, "Their");
+                sentence = sentence.replace(objectPronounsLower, "them");
+                sentence = sentence.replace(objectPronounsUpper, "Them");
+                break;
+        }
+        return sentence;
     };
     return ParagraphGenerator;
 }());
