@@ -11,16 +11,15 @@ var ParagraphGenerator = /** @class */ (function () {
      * @param gender Gender of the patient
      */
     function ParagraphGenerator(name, gender) {
-        this.sentences = [];
         this.name = "";
         this.gender = Gender.Male;
+        this.sentences = [];
         this.problems = {};
         this.name = name;
         this.gender = gender;
     }
     /**
      * Generates a complete paragraph
-     *
      * @param problem1 the first problem type (blank for random)
      * @param problem2 the second problem type (blank for random)
      * @returns a string containing the complete paragraph
@@ -62,7 +61,6 @@ var ParagraphGenerator = /** @class */ (function () {
     };
     /**
      * Returns a list of available problem types
-     *
      * @returns the list of available problem types
      */
     ParagraphGenerator.prototype.getProblemTypes = function () {
@@ -75,6 +73,7 @@ var ParagraphGenerator = /** @class */ (function () {
     /**
      * Loads a json file containing the sentence bank from a url
      * @param url the url to load from
+     * @returns a promise for the ajax request
      */
     ParagraphGenerator.prototype.loadSentences = function (url) {
         var _this = this;
@@ -85,6 +84,7 @@ var ParagraphGenerator = /** @class */ (function () {
     /**
      * Loads a json file containing the problem-treatment bank from a url
      * @param url the url to load from
+     * @returns a promise for the ajax request
      */
     ParagraphGenerator.prototype.loadProblemTreatments = function (url) {
         var _this = this;
@@ -94,21 +94,22 @@ var ParagraphGenerator = /** @class */ (function () {
     };
     /**
      * Updates name
-     *
      * @param name
      */
-    ParagraphGenerator.prototype.updateName = function (name) { this.name = name; };
+    ParagraphGenerator.prototype.updateName = function (name) {
+        this.name = name;
+    };
     /**
      * Updates gender
-     *
      * @param gender
      */
-    ParagraphGenerator.prototype.updateGender = function (gender) { this.gender = gender; };
+    ParagraphGenerator.prototype.updateGender = function (gender) {
+        this.gender = gender;
+    };
     /**
     * Generates a problem and treatment pair
-    *
     * @param problemType the type of problem-treatment to generate
-    * @returns a string containing the
+    * @returns a string containing the problem and treatment
     */
     ParagraphGenerator.prototype.generateProblemTreatment = function (problemType) {
         var sentence = "";
@@ -118,8 +119,7 @@ var ParagraphGenerator = /** @class */ (function () {
         return sentence;
     };
     /**
-     * returns a random element in an array
-     *
+     * Returns a random element in an array
      * @param array The array to pick from
      * @returns an element from the array
      */

@@ -3,12 +3,10 @@ enum Gender {
 }
 
 class ParagraphGenerator {
-    private sentences: Array<Array<string>> = [];
-
     private name: string = "";
     private gender: Gender = Gender.Male;
-
-    private problems: {[key: string] : {[key:string] : Array<string>}} = {}
+    private sentences: Array<Array<string>> = [];
+    private problems: { [key: string]: { [key: string]: Array<string> } } = {}
 
     /**
      * @param name Name of the patient
@@ -18,10 +16,9 @@ class ParagraphGenerator {
         this.name = name;
         this.gender = gender;
     }
-    
+
     /**
      * Generates a complete paragraph
-     * 
      * @param problem1 the first problem type (blank for random)
      * @param problem2 the second problem type (blank for random)
      * @returns a string containing the complete paragraph
@@ -65,10 +62,9 @@ class ParagraphGenerator {
 
     /**
      * Returns a list of available problem types
-     * 
      * @returns the list of available problem types
      */
-    public getProblemTypes() : Array<string> {
+    public getProblemTypes(): Array<string> {
         let problemTypes: Array<string> = [];
         for (let problemType in this.problems) {
             problemTypes.push(problemType);
@@ -79,8 +75,9 @@ class ParagraphGenerator {
     /**
      * Loads a json file containing the sentence bank from a url
      * @param url the url to load from
+     * @returns a promise for the ajax request
      */
-    public loadSentences(url: string) {
+    public loadSentences(url: string): JQueryXHR {
         return $.getJSON(url, (data) => {
             this.sentences = data;
         });
@@ -89,8 +86,9 @@ class ParagraphGenerator {
     /**
      * Loads a json file containing the problem-treatment bank from a url
      * @param url the url to load from
+     * @returns a promise for the ajax request
      */
-    public loadProblemTreatments(url: string) {
+    public loadProblemTreatments(url: string): JQueryXHR {
         return $.getJSON(url, (data) => {
             this.problems = data;
         });
@@ -98,22 +96,23 @@ class ParagraphGenerator {
 
     /**
      * Updates name
-     * 
-     * @param name 
+     * @param name
      */
-    public updateName(name: string): void { this.name = name; }
+    public updateName(name: string): void {
+        this.name = name;
+    }
     /**
      * Updates gender
-     * 
      * @param gender 
      */
-    public updateGender(gender: Gender): void { this.gender = gender; }
+    public updateGender(gender: Gender): void {
+        this.gender = gender;
+    }
 
     /**
     * Generates a problem and treatment pair
-    * 
     * @param problemType the type of problem-treatment to generate
-    * @returns a string containing the 
+    * @returns a string containing the problem and treatment
     */
     private generateProblemTreatment(problemType: string): string {
         let sentence: string = "";
@@ -125,12 +124,11 @@ class ParagraphGenerator {
     }
 
     /**
-     * returns a random element in an array
-     * 
+     * Returns a random element in an array
      * @param array The array to pick from
      * @returns an element from the array
      */
-    private getRandom(array: Array<string>): string {
+    private getRandom<T>(array: Array<T>): T {
         return array[Math.floor((Math.random() * array.length))];
     }
 
@@ -142,7 +140,7 @@ class ParagraphGenerator {
     private convertSentence(sentence: String): String {
         // Fill in names
         sentence = sentence.replace(/_/g, this.name);
-        
+
         // Pronoun regex patterns (there might be a cleaner way to do this)
         // Personal pronouns
         let personalPronounsLower = /\bhe\b|\bshe\b|\bthey\b/g;
@@ -153,7 +151,7 @@ class ParagraphGenerator {
         // Object pronouns
         let objectPronounsLower = /\bhim\b|\bher\b|\bthem\b/g;
         let objectPronounsUpper = /\bHim\b|\bHer\b|\bThem\b/g;
-        
+
         // Convert pronouns
         switch (this.gender) {
             case Gender.Male:
