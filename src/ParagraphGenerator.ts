@@ -17,10 +17,13 @@ class ParagraphGenerator {
      * @param problemUrl  url to load problem bank from
      */
     constructor(name: string, gender: Gender, sentenceUrl: string, problemUrl: string) {
-        this.name = name;
-        this.gender = gender;
-        this.initSentences(sentenceUrl);
-        this.initProblemTreatments(problemUrl);
+        // bit scuffed
+        this.initSentences(sentenceUrl).done(() =>{
+            this.initProblemTreatments(problemUrl).done(() => {
+                this.name = name;
+                this.gender = gender;
+            });
+        });
     }
     
     /**
@@ -99,10 +102,8 @@ class ParagraphGenerator {
      * @param url the url to load from
      */
     private initSentences(url: string) {
-        $.getJSON(url, (data) => {
+        return $.getJSON(url, (data) => {
             this.sentences = data;
-        }).done(() => {
-            console.log("sentences loaded");
         });
     }
 
@@ -111,10 +112,8 @@ class ParagraphGenerator {
      * @param url the url to load from
      */
     private initProblemTreatments(url: string) {
-        $.getJSON(url, (data) => {
+        return $.getJSON(url, (data) => {
             this.problems = data;
-        }).done(() => {
-            console.log("problems loaded");
         });
     }
 

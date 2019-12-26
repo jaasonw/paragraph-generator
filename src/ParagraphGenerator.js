@@ -13,14 +13,18 @@ var ParagraphGenerator = /** @class */ (function () {
      * @param problemUrl  url to load problem bank from
      */
     function ParagraphGenerator(name, gender, sentenceUrl, problemUrl) {
+        var _this = this;
         this.sentences = [];
         this.name = "";
         this.gender = Gender.Male;
         this.problems = {};
-        this.name = name;
-        this.gender = gender;
-        this.initSentences(sentenceUrl);
-        this.initProblemTreatments(problemUrl);
+        // bit scuffed
+        this.initSentences(sentenceUrl).done(function () {
+            _this.initProblemTreatments(problemUrl).done(function () {
+                _this.name = name;
+                _this.gender = gender;
+            });
+        });
     }
     /**
      * Generates a complete paragraph
@@ -94,10 +98,8 @@ var ParagraphGenerator = /** @class */ (function () {
      */
     ParagraphGenerator.prototype.initSentences = function (url) {
         var _this = this;
-        $.getJSON(url, function (data) {
+        return $.getJSON(url, function (data) {
             _this.sentences = data;
-        }).done(function () {
-            console.log("sentences loaded");
         });
     };
     /**
@@ -106,10 +108,8 @@ var ParagraphGenerator = /** @class */ (function () {
      */
     ParagraphGenerator.prototype.initProblemTreatments = function (url) {
         var _this = this;
-        $.getJSON(url, function (data) {
+        return $.getJSON(url, function (data) {
             _this.problems = data;
-        }).done(function () {
-            console.log("problems loaded");
         });
     };
     /**
