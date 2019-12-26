@@ -1,5 +1,5 @@
 {
-    "fall" : {
+    "Fall" : {
         "problems" : [
             "he reported having a fall at home with no hospitalizations. He expressed worry about his physical health decline with age and further risk of fall.",
             "_ reported having multiple near fall incidents and continues to be at risk of fall."
@@ -9,7 +9,7 @@
             "SW educated _ on fall prevention and precaution techniques, such as properly using his walking device to reduce the risk of future fall."
         ]
     },
-    "age": {
+    "Aging": {
         "problems": [
             "_ expressed negative feelings and concern toward his health decline related to aging. ",
             "he expressed concern and worry that he’ll become a burden on his family due to his further aging and physical health decline.",
@@ -23,7 +23,7 @@
             "SW encouraged _ to keep active participation in the Center’s activities in order to stay positive about the aging process and take his mind off of the negative symptoms."
         ]
     },
-    "joint": {
+    "Joint": {
         "problems": [
             "_ complained about joint pain and leg weakness, which has affected his mood. He cites the recent cold weather as a factor.",
             "_ complained about somatic pain related to aging and expressed worry about aging. He stated that on some days, his mood was affected negatively by his somatic pain."
@@ -34,7 +34,7 @@
             "SW provided emotional support through use of active listening, empathy, and validation."
         ]
     },
-    "hearing": {
+    "Hearing": {
         "problems": [
             "he complained about having hard of hearing, leading to frustration and difficulty communicating with others."
         ],
@@ -43,7 +43,7 @@
             "SW provided a quiet place for him to talk and listen clearly, as well as providing emotional support."
         ]
     },
-    "memory": {
+    "Memory": {
         "problems": [
             "he complained about memory loss, which often leads to confusion and misplacing of personal possessions."
         ],
@@ -52,7 +52,7 @@
             "SW provided reality orientation and offered opportunity to reminiscence as a form of cognitive stimulation."
         ]
     },
-    "loneliness": {
+    "Loneliness": {
         "problems": [
             "_ expressed feelings of loneliness and isolation. ",
             "_ remained mostly quiet and said few words. _ seems to lack motivation for social interaction."
