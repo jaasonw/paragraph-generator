@@ -8,16 +8,23 @@
         <script>
             $(document).ready(function () {
                 var gen = new ParagraphGenerator("", Gender.Other, "src/sentences.json", "src/problem_treatments.json");
+                // add problem type selection
+                var problems = gen.getProblemTypes();
+                for (var i = 0; i < problems.length; i++) {
+                    $(".problems").append("<option></option>").val(problems[i]).html(problems[i])
+                }
                 $("#form").submit(function(event) {
                     event.preventDefault();
                     var data = $("#form").serializeArray();
                     var name = data[0].value;
                     var gender = (data[1].value == "male") ? Gender.Male : Gender.Female;
+                    var problem1 = data[3].value;
+                    var problem2 = data[4].value;
                     
                     gen.updateName(name);
                     gen.updateGender(gender);
                     
-                    $("#paragraph").val(gen.generateParagraph())
+                    $("#paragraph").val(gen.generateParagraph(problem1, problem2));
                 });
             });
         </script>
@@ -31,6 +38,17 @@
         <br>
         <input type="radio" name="gender" value="male" checked> Male<br>
         <input type="radio" name="gender" value="female"> Female<br>
+
+        Problem 1:
+        <select class = "problems" name="problem1">
+            <option value="" selected>Any</option>
+        </select>
+        <br>
+        Problem 2:
+        <select class = "problems" name="problem2">
+            <option value="" selected>Any</option>
+        </select>
+        <br>
         <input type="submit" value="Submit">
     </form>
 
