@@ -18,8 +18,8 @@
                     var data = $("#form").serializeArray();
                     var name = data[0].value;
                     var gender = (data[1].value == "male") ? Gender.Male : Gender.Female;
-                    var problem1 = data[3].value;
-                    var problem2 = data[4].value;
+                    var problem1 = data[2].value;
+                    var problem2 = data[3].value;
                     
                     gen.updateName(name);
                     gen.updateGender(gender);
