@@ -1,0 +1,64 @@
+{
+    "fall" : {
+        "problems" : [
+            "However, he reported having a fall at home with no hospitalizations. He expressed worry about his physical health decline with age and further risk of fall.",
+            "_ reported having multiple near fall incidents and continues to be at risk of fall."
+        ],
+        "treatments": [
+            "SW reinforced proper fall prevention and precaution techniques to reduce the risk of future fall.",
+            "SW educated _ on fall prevention and precaution techniques, such as properly using his walking device to reduce the risk of future fall."
+        ]
+    },
+    "age": {
+        "problems": [
+            "However, _ expressed negative feelings and concern toward his health decline related to aging. ",
+            "However, he expressed concern and worry that he’ll become a burden on his family due to his further aging and physical health decline.",
+            "However, he expressed concern about further physical decline related to aging."
+        ],
+        "treatments": [
+            "SW provided the opportunity for _ to vent his negative feelings appropriately, through use of empathy, active listening, and positive feedback.",
+            "SW provided the opportunity for him to vent his inner feelings appropriately through use of active listening, empathy, and positive feedback.",
+            "SW provided emotional support through use of active listening, empathy, and validation.",
+            "SW reinforced coping skills and relaxation techniques to help _ manage the symptoms and difficulties of aging.",
+            "SW encouraged _ to keep active participation in the Center’s activities in order to stay positive about the aging process and take his mind off of the negative symptoms."
+        ]
+    },
+    "joint": {
+        "problems": [
+            "_ complained about joint pain and leg weakness, which has affected his mood. He cites the recent cold weather as a factor.",
+            "_ complained about somatic pain related to aging and expressed worry about aging. He stated that on some days, his mood was affected negatively by his somatic pain."
+        ],
+        "treatments": [
+            "SW provided the opportunity for _ to vent his negative feelings appropriately, through use of empathy, active listening, and positive feedback.",
+            "SW provided the opportunity for him to vent his inner feelings appropriately through use of active listening, empathy, and positive feedback.",
+            "SW provided emotional support through use of active listening, empathy, and validation."
+        ]
+    },
+    "hearing": {
+        "problems": [
+            "He complained about having hard of hearing, leading to frustration and difficulty communicating with others."
+        ],
+        "treatments": [
+            "SW provided a quiet environment for him to communicate and be understood easily, letting him express his feelings through active listening.",
+            "SW provided a quiet place for him to talk and listen clearly, as well as providing emotional support."
+        ]
+    },
+    "memory": {
+        "problems": [
+            "He complained about memory loss, which often leads to confusion and misplacing of personal possessions."
+        ],
+        "treatments": [
+            "SW encouraged _ to maintain active participation in the Center’s activities and exercises as a form of mental and cognitive stimulation.",
+            "SW provided reality orientation and offered opportunity to reminiscence as a form of cognitive stimulation."
+        ]
+    },
+    "loneliness": {
+        "problems": [
+            "_ expressed feelings of loneliness and isolation. ",
+            "_ remained mostly quiet and said few words. _ seems to lack motivation for social interaction."
+        ],
+        "treatments": [
+            "SW encouraged _ to keep active participation in the Center’s activities and interaction with peers to reduce feelings of loneliness. SW also provided emotional support through use of active listening, empathy, and validation."
+        ]
+    }
+}
