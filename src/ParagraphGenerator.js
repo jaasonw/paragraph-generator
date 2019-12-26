@@ -119,14 +119,14 @@ var ParagraphGenerator = /** @class */ (function () {
         sentence = sentence.replace(/_/g, this.name);
         // Pronoun regex patterns (there might be a cleaner way to do this)
         // Personal pronouns
-        var personalPronounsLower = new RegExp('/\bhe\b|\bshe\b|\bthey\b/g');
-        var personalPronounsUpper = new RegExp('/\bHe\b|\bShe\b|\bThey\b/g');
+        var personalPronounsLower = /\bhe\b|\bshe\b|\bthey\b/g;
+        var personalPronounsUpper = /\bHe\b|\bShe\b|\bThey\b/g;
         // Possessive pronouns
-        var possesivePronounsLower = new RegExp('/\bhis\b|\bher\b|\btheir\b/g');
-        var possesivePronounsUpper = new RegExp('/\bHis\b|\bHer\b|\bTheir\b/g');
+        var possesivePronounsLower = /\bhis\b|\bher\b|\btheir\b/g;
+        var possesivePronounsUpper = /\bHis\b|\bHer\b|\bTheir\b/g;
         // Object pronouns
-        var objectPronounsLower = new RegExp('/\bhim\b|\bher\b|\bthem\b/g');
-        var objectPronounsUpper = new RegExp('/\bHim\b|\bHer\b|\bThem\b/g');
+        var objectPronounsLower = /\bhim\b|\bher\b|\bthem\b/g;
+        var objectPronounsUpper = /\bHim\b|\bHer\b|\bThem\b/g;
         // Convert pronouns
         switch (this.gender) {
             case Gender.Male:

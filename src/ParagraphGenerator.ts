@@ -126,14 +126,14 @@ class ParagraphGenerator {
         
         // Pronoun regex patterns (there might be a cleaner way to do this)
         // Personal pronouns
-        let personalPronounsLower = new RegExp('/\bhe\b|\bshe\b|\bthey\b/g');
-        let personalPronounsUpper = new RegExp('/\bHe\b|\bShe\b|\bThey\b/g');
+        let personalPronounsLower = /\bhe\b|\bshe\b|\bthey\b/g;
+        let personalPronounsUpper = /\bHe\b|\bShe\b|\bThey\b/g;
         // Possessive pronouns
-        let possesivePronounsLower = new RegExp('/\bhis\b|\bher\b|\btheir\b/g');
-        let possesivePronounsUpper = new RegExp('/\bHis\b|\bHer\b|\bTheir\b/g');
+        let possesivePronounsLower = /\bhis\b|\bher\b|\btheir\b/g;
+        let possesivePronounsUpper = /\bHis\b|\bHer\b|\bTheir\b/g;
         // Object pronouns
-        let objectPronounsLower = new RegExp('/\bhim\b|\bher\b|\bthem\b/g');
-        let objectPronounsUpper = new RegExp('/\bHim\b|\bHer\b|\bThem\b/g');
+        let objectPronounsLower = /\bhim\b|\bher\b|\bthem\b/g;
+        let objectPronounsUpper = /\bHim\b|\bHer\b|\bThem\b/g;
         
         // Convert pronouns
         switch (this.gender) {
