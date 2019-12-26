@@ -32,8 +32,8 @@ class ParagraphGenerator {
      */
     public generateParagraph(problem1: string = "", problem2: string = ""): string {
         let paragraph: string = "";
-        let problemTreatment1: string = this.generateProblemTreatment();
-        let problemTreatment2: string = this.generateProblemTreatment();
+        let problemTreatment1: string = this.generateProblemTreatment(problem1);
+        let problemTreatment2: string = this.generateProblemTreatment(problem2);
 
         while (problemTreatment1 == problemTreatment2) {
             problemTreatment2 = this.generateProblemTreatment();
@@ -94,7 +94,6 @@ class ParagraphGenerator {
         return array[Math.floor((Math.random() * array.length))];
     }
 
-    // TODO: unhardcode the urls
     /**
      * Loads a json file containing the sentence bank from a url
      * @param url the url to load from
@@ -102,6 +101,8 @@ class ParagraphGenerator {
     private initSentences(url: string) {
         $.getJSON(url, (data) => {
             this.sentences = data;
+        }).done(() => {
+            console.log("sentences loaded");
         });
     }
 
@@ -112,6 +113,8 @@ class ParagraphGenerator {
     private initProblemTreatments(url: string) {
         $.getJSON(url, (data) => {
             this.problems = data;
+        }).done(() => {
+            console.log("problems loaded");
         });
     }
 

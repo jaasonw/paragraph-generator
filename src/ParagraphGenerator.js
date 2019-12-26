@@ -33,8 +33,8 @@ var ParagraphGenerator = /** @class */ (function () {
         if (problem1 === void 0) { problem1 = ""; }
         if (problem2 === void 0) { problem2 = ""; }
         var paragraph = "";
-        var problemTreatment1 = this.generateProblemTreatment();
-        var problemTreatment2 = this.generateProblemTreatment();
+        var problemTreatment1 = this.generateProblemTreatment(problem1);
+        var problemTreatment2 = this.generateProblemTreatment(problem2);
         while (problemTreatment1 == problemTreatment2) {
             problemTreatment2 = this.generateProblemTreatment();
         }
@@ -88,7 +88,6 @@ var ParagraphGenerator = /** @class */ (function () {
     ParagraphGenerator.prototype.getRandom = function (array) {
         return array[Math.floor((Math.random() * array.length))];
     };
-    // TODO: unhardcode the urls
     /**
      * Loads a json file containing the sentence bank from a url
      * @param url the url to load from
@@ -97,6 +96,8 @@ var ParagraphGenerator = /** @class */ (function () {
         var _this = this;
         $.getJSON(url, function (data) {
             _this.sentences = data;
+        }).done(function () {
+            console.log("sentences loaded");
         });
     };
     /**
@@ -107,6 +108,8 @@ var ParagraphGenerator = /** @class */ (function () {
         var _this = this;
         $.getJSON(url, function (data) {
             _this.problems = data;
+        }).done(function () {
+            console.log("problems loaded");
         });
     };
     /**
