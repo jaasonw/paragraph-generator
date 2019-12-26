@@ -9,8 +9,6 @@ var ParagraphGenerator = /** @class */ (function () {
     /**
      * @param name Name of the patient
      * @param gender Gender of the patient
-     * @param sentenceUrl url to load sentence bank from
-     * @param problemUrl  url to load problem bank from
      */
     function ParagraphGenerator(name, gender) {
         this.sentences = [];
@@ -75,30 +73,6 @@ var ParagraphGenerator = /** @class */ (function () {
         return problemTypes;
     };
     /**
-    * Generates a problem and treatment pair
-    *
-    * @param problemType the type of problem-treatment to generate
-    * @returns a string containing the
-    */
-    ParagraphGenerator.prototype.generateProblemTreatment = function (problemType) {
-        var sentence = "";
-        var problem = this.getRandom(this.problems[problemType]["problems"]);
-        var treatment = this.getRandom(this.problems[problemType]["treatments"]);
-        sentence = problem + " " + treatment;
-        return sentence;
-    };
-    ParagraphGenerator.prototype.updateName = function (name) { this.name = name; };
-    ParagraphGenerator.prototype.updateGender = function (gender) { this.gender = gender; };
-    /**
-     * returns a random element in an array
-     *
-     * @param array The array to pick from
-     * @returns an element from the array
-     */
-    ParagraphGenerator.prototype.getRandom = function (array) {
-        return array[Math.floor((Math.random() * array.length))];
-    };
-    /**
      * Loads a json file containing the sentence bank from a url
      * @param url the url to load from
      */
@@ -117,6 +91,40 @@ var ParagraphGenerator = /** @class */ (function () {
         return $.getJSON(url, function (data) {
             _this.problems = data;
         });
+    };
+    /**
+     * Updates name
+     *
+     * @param name
+     */
+    ParagraphGenerator.prototype.updateName = function (name) { this.name = name; };
+    /**
+     * Updates gender
+     *
+     * @param gender
+     */
+    ParagraphGenerator.prototype.updateGender = function (gender) { this.gender = gender; };
+    /**
+    * Generates a problem and treatment pair
+    *
+    * @param problemType the type of problem-treatment to generate
+    * @returns a string containing the
+    */
+    ParagraphGenerator.prototype.generateProblemTreatment = function (problemType) {
+        var sentence = "";
+        var problem = this.getRandom(this.problems[problemType]["problems"]);
+        var treatment = this.getRandom(this.problems[problemType]["treatments"]);
+        sentence = problem + " " + treatment;
+        return sentence;
+    };
+    /**
+     * returns a random element in an array
+     *
+     * @param array The array to pick from
+     * @returns an element from the array
+     */
+    ParagraphGenerator.prototype.getRandom = function (array) {
+        return array[Math.floor((Math.random() * array.length))];
     };
     /**
      * Converts the pronouns and fills in the names of a sentence

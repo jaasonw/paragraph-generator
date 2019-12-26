@@ -13,8 +13,6 @@ class ParagraphGenerator {
     /**
      * @param name Name of the patient
      * @param gender Gender of the patient
-     * @param sentenceUrl url to load sentence bank from
-     * @param problemUrl  url to load problem bank from
      */
     constructor(name: string, gender: Gender) {
         this.name = name;
@@ -79,34 +77,6 @@ class ParagraphGenerator {
     }
 
     /**
-    * Generates a problem and treatment pair
-    * 
-    * @param problemType the type of problem-treatment to generate
-    * @returns a string containing the 
-    */
-    private generateProblemTreatment(problemType: string): string {
-        let sentence: string = "";
-        let problem = this.getRandom(this.problems[problemType]["problems"]);
-        let treatment = this.getRandom(this.problems[problemType]["treatments"]);
-
-        sentence = problem + " " + treatment;
-        return sentence;
-    }
-
-    public updateName(name: string) : void { this.name = name; }
-    public updateGender(gender: Gender) : void { this.gender = gender; }
-
-    /**
-     * returns a random element in an array
-     * 
-     * @param array The array to pick from
-     * @returns an element from the array
-     */
-    private getRandom(array: Array<string>): string {
-        return array[Math.floor((Math.random() * array.length))];
-    }
-
-    /**
      * Loads a json file containing the sentence bank from a url
      * @param url the url to load from
      */
@@ -124,6 +94,44 @@ class ParagraphGenerator {
         return $.getJSON(url, (data) => {
             this.problems = data;
         });
+    }
+
+    /**
+     * Updates name
+     * 
+     * @param name 
+     */
+    public updateName(name: string): void { this.name = name; }
+    /**
+     * Updates gender
+     * 
+     * @param gender 
+     */
+    public updateGender(gender: Gender): void { this.gender = gender; }
+
+    /**
+    * Generates a problem and treatment pair
+    * 
+    * @param problemType the type of problem-treatment to generate
+    * @returns a string containing the 
+    */
+    private generateProblemTreatment(problemType: string): string {
+        let sentence: string = "";
+        let problem = this.getRandom(this.problems[problemType]["problems"]);
+        let treatment = this.getRandom(this.problems[problemType]["treatments"]);
+
+        sentence = problem + " " + treatment;
+        return sentence;
+    }
+
+    /**
+     * returns a random element in an array
+     * 
+     * @param array The array to pick from
+     * @returns an element from the array
+     */
+    private getRandom(array: Array<string>): string {
+        return array[Math.floor((Math.random() * array.length))];
     }
 
     /**
