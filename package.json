@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "module": "jquery"
+        "jquery": "^3.4.1"
     },
     "devDependencies": {
         "@types/jquery": "^3.3.31"

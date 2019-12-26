@@ -2,6 +2,9 @@
     "compilerOptions": {
         "target": "es3",
         "module": "commonjs",
+        "types": [
+            "@types/jquery"
+        ],
         "strict": true
     }
 }
