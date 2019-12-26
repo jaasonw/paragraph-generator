@@ -15,7 +15,7 @@
                     var gender = (data[1].value == "male") ? Gender.Male : Gender.Female;
                     
                     gen.updateName(name);
-                    gen.updateGender(name);
+                    gen.updateGender(gender);
                     
                     $("#paragraph").val(gen.generateParagraph())
                 });
