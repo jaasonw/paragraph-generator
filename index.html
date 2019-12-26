@@ -11,7 +11,7 @@
                 // add problem type selection
                 var problems = gen.getProblemTypes();
                 for (var i = 0; i < problems.length; i++) {
-                    $(".problems").append("<option></option>").val(problems[i]).html(problems[i])
+                    $(".problems").append(new Option(problems[i], problems[i]));
                 }
                 $("#form").submit(function(event) {
                     event.preventDefault();
