@@ -60,5 +60,18 @@
         "treatments": [
             "SW encouraged _ to keep active participation in the Center’s activities and interaction with peers to reduce feelings of loneliness. SW also provided emotional support through use of active listening, empathy, and validation."
         ]
+    },
+    "Sleep": {
+        "problems": [
+            "_ complained about having sleep problems, only getting a few hours of sleep per night with frequent urination.",
+            "he complained about having poor sleep, only getting 4-5 hours of sleep per night and having at least 3x nocturia.",
+            "he complained about having trouble sleeping at night, getting less hours of sleep per night than he did before, citing the recent cold weather as a factor."
+        ],
+        "treatments": [
+            "SW reinforced proper sleep hygiene and relaxation techniques to help with the sleeping problems.",
+            "SW taught him sleep hygiene and relaxation techniques such as stretching before bed, to help with sleep problems.",
+            "SW encouraged relaxation and breathing techniques such as stretching or taking a warm bath before bed to increase sleep quality."
+        ]
+
     }
 }
