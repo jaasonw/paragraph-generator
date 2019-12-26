@@ -5,6 +5,7 @@
         "types": [
             "@types/jquery"
         ],
-        "strict": true
+        "strict": true,
+        "removeComments": true
     }
 }
