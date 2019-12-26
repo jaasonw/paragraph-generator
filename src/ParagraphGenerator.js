@@ -12,19 +12,13 @@ var ParagraphGenerator = /** @class */ (function () {
      * @param sentenceUrl url to load sentence bank from
      * @param problemUrl  url to load problem bank from
      */
-    function ParagraphGenerator(name, gender, sentenceUrl, problemUrl) {
-        var _this = this;
+    function ParagraphGenerator(name, gender) {
         this.sentences = [];
         this.name = "";
         this.gender = Gender.Male;
         this.problems = {};
-        // bit scuffed
-        this.initSentences(sentenceUrl).done(function () {
-            _this.initProblemTreatments(problemUrl).done(function () {
-                _this.name = name;
-                _this.gender = gender;
-            });
-        });
+        this.name = name;
+        this.gender = gender;
     }
     /**
      * Generates a complete paragraph
@@ -96,7 +90,7 @@ var ParagraphGenerator = /** @class */ (function () {
      * Loads a json file containing the sentence bank from a url
      * @param url the url to load from
      */
-    ParagraphGenerator.prototype.initSentences = function (url) {
+    ParagraphGenerator.prototype.loadSentences = function (url) {
         var _this = this;
         return $.getJSON(url, function (data) {
             _this.sentences = data;
@@ -106,7 +100,7 @@ var ParagraphGenerator = /** @class */ (function () {
      * Loads a json file containing the problem-treatment bank from a url
      * @param url the url to load from
      */
-    ParagraphGenerator.prototype.initProblemTreatments = function (url) {
+    ParagraphGenerator.prototype.loadProblemTreatments = function (url) {
         var _this = this;
         return $.getJSON(url, function (data) {
             _this.problems = data;

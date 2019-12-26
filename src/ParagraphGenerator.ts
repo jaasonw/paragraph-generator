@@ -16,14 +16,9 @@ class ParagraphGenerator {
      * @param sentenceUrl url to load sentence bank from
      * @param problemUrl  url to load problem bank from
      */
-    constructor(name: string, gender: Gender, sentenceUrl: string, problemUrl: string) {
-        // bit scuffed
-        this.initSentences(sentenceUrl).done(() =>{
-            this.initProblemTreatments(problemUrl).done(() => {
-                this.name = name;
-                this.gender = gender;
-            });
-        });
+    constructor(name: string, gender: Gender) {
+        this.name = name;
+        this.gender = gender;
     }
     
     /**
@@ -101,7 +96,7 @@ class ParagraphGenerator {
      * Loads a json file containing the sentence bank from a url
      * @param url the url to load from
      */
-    private initSentences(url: string) {
+    public loadSentences(url: string) {
         return $.getJSON(url, (data) => {
             this.sentences = data;
         });
@@ -111,7 +106,7 @@ class ParagraphGenerator {
      * Loads a json file containing the problem-treatment bank from a url
      * @param url the url to load from
      */
-    private initProblemTreatments(url: string) {
+    public loadProblemTreatments(url: string) {
         return $.getJSON(url, (data) => {
             this.problems = data;
         });

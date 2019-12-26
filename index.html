@@ -7,12 +7,17 @@
         <script src="src/ParagraphGenerator.js"></script>
         <script>
             $(document).ready(function () {
-                var gen = new ParagraphGenerator("", Gender.Other, "src/sentences.json", "src/problem_treatments.json");
-                // add problem type selection
-                var problems = gen.getProblemTypes();
-                for (var i = 0; i < problems.length; i++) {
-                    $(".problems").append(new Option(problems[i], problems[i]));
-                }
+                var gen = new ParagraphGenerator("", Gender.Other);
+                var sentencePromise = gen.loadSentences("src/sentences.json");
+                var problemPromise = gen.loadProblemTreatments("src/problem_treatments.json");
+
+                $.when(sentencePromise, problemPromise).done(function() {
+                    // add problem type selection
+                    var problems = gen.getProblemTypes();
+                    for (var i = 0; i < problems.length; i++) {
+                        $(".problems").append(new Option(problems[i], problems[i]));
+                    }
+                })
                 $("#form").submit(function(event) {
                     event.preventDefault();
                     var data = $("#form").serializeArray();
